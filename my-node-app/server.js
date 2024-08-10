@@ -3,11 +3,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
+app.use(express.static('SAMSUNG - DJIZZAKH/pages'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Middleware to parse incoming JSON requests
-app.use(bodyParser.json());
-
-// Connect to MongoDB Atlas
+// MongoDB connection
 mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -17,30 +16,25 @@ mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mong
     console.error('Error connecting to MongoDB Atlas', error);
 });
 
-// Define a schema and model for the data
-const DataSchema = new mongoose.Schema({
+// Define the schema for the data
+const promoterSchema = new mongoose.Schema({
     shortText: String,
-    longText: String,
+    longText: String
 });
 
-const Data = mongoose.model('Data', DataSchema);
+const PromoterData = mongoose.model('PromoterData', promoterSchema);
 
 // Route to handle form submission
-app.post('/submit', async (req, res) => {
-    const { shortText, longText } = req.body;
+app.post('/submit-promoter', (req, res) => {
+    const promoterData = new PromoterData({
+        shortText: req.body.shortText,
+        longText: req.body.longText
+    });
 
-    try {
-        const newData = new Data({ shortText, longText });
-        await newData.save();
-        res.json({ success: true });
-    } catch (error) {
-        console.error('Error saving data to MongoDB:', error);
-        res.json({ success: false });
-    }
+    promoterData.save()
+        .then(() => res.send('Data saved successfully'))
+        .catch(err => res.status(400).send('Error saving data'));
 });
-
-// Serve static files (your HTML, CSS, etc.)
-app.use(express.static('SAMSUNG - DJIZZAKH/pages'));
 
 // Start the server
 const PORT = process.env.PORT || 3000;
