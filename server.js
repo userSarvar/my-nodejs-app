@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files from the 'pages' directory
-app.use(express.static(path.join(__dirname, 'pages')));
+app.use(express.static(path.join(__dirname, 'pagess')));
 
 // Connect to MongoDB Atlas
 mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mongodb.net/yourDatabaseName', {
