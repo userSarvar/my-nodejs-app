@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'pages')));
 
 // Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mongodb.net/yourDatabaseName', {
+mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mongodb.net/SamsungDjizzakh', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
@@ -49,7 +49,7 @@ app.post('/submit-promoter', async (req, res) => {
  
 // Serve the promoter page at the root URL
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'promoter.html'));
+    res.sendFile(path.join(__dirname, 'pages', 'main.html'));
 });
 
 // Set the port for the server
