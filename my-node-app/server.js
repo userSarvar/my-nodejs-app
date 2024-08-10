@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://Samsunguser:password@cluster0.w1z0c.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
