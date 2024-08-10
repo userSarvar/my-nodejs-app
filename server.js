@@ -49,7 +49,7 @@ app.post('/submit-promoter', async (req, res) => {
 
 // Serve the index page at the root URL
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'login.html'));
+    res.sendFile(path.join(__dirname, 'pages', 'index.html'));
 });
 
 // Serve the promoter page at '/promoter'
