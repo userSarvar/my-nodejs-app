@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.use(express.static('SAMSUNG - DJIZZAKH/pages'));
+app.use(express.static(path.join(__dirname, 'pages')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB connection
