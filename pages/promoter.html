@@ -16,6 +16,45 @@
             <li>Confirm identity</li>
             <li>Data flows up to the Regional Manager/RM Supervisor/SV</li>
         </ul>
+
+        <!-- Form to submit data -->
+        <form id="promoterForm">
+            <div class="form-group">
+                <label for="shortText">Short Text:</label>
+                <input type="text" class="form-control" id="shortText" name="shortText" required>
+            </div>
+            <div class="form-group">
+                <label for="longText">Long Text:</label>
+                <textarea class="form-control" id="longText" name="longText" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('promoterForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const shortText = document.getElementById('shortText').value;
+            const longText = document.getElementById('longText').value;
+
+            // Send data to the server
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ shortText, longText }),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert('Data submitted successfully!');
+            } else {
+                alert('Failed to submit data.');
+            }
+        });
+    </script>
 </body>
 </html>
