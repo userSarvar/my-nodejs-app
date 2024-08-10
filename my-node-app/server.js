@@ -46,7 +46,7 @@ app.post('/submit-promoter', async (req, res) => {
         res.status(500).send('Failed to save data.');
     }
 });
-
+ 
 // Serve the promoter page at the root URL
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'promoter.html'));
