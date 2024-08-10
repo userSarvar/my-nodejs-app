@@ -5,27 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Promoter Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-
 </head>
-<body class="main-bg">
-
-    <div class=" nav bg-white  ">
-        <div class="container ">
-        
-            <div class="row pt-4 pb-3">
-                <div class="col-md-4">
-                    <img src="img/Samsung - Djizzakh.png" class="img-fluid logo-djizzakh" alt="Samsung - Djizzakh logo">
-                </div>
-            </div>
-        
-        </div>
-    </div>
-
+<body>
     <div class="container mt-5">
-        <form action="/submit-promoter" method="POST" class="form-my">
-            <div class="form-content py-4 ">
-            <div class="form-group ">
+        <h2>Promoter/SA Page</h2>
+        <p>Responsibilities:</p>
+        <ul>
+            <li>Enter data</li>
+            <li>Confirm identity</li>
+            <li>Data flows up to the Regional Manager/RM Supervisor/SV</li>
+        </ul>
+
+        <form action="/submit-promoter" method="POST">
+            <div class="form-group">
                 <label for="shortText">Short Text:</label>
                 <input type="text" class="form-control" id="shortText" name="shortText" required>
             </div>
@@ -35,8 +27,7 @@
                 <textarea class="form-control" id="longText" name="longText" rows="4" required></textarea>
             </div>
 
-            <button type="submit" class="sub-button">Submit</button>
-        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </body>
