@@ -10,17 +10,50 @@
 <body>
     <div class="container mt-5">
         <h2>Promoter/SA Page</h2>
-        <form action="/submit-promoter" method="POST">
-            <label for="shortText">Short Text:</label>
-            <input type="text" id="shortText" name="shortText"><br><br>
-        
-            <label for="longText">Long Text:</label>
-            <textarea id="longText" name="longText"></textarea><br><br>
-        
-            <button type="submit">Submit</button>
-        </form>
-        
+        <p>Responsibilities:</p>
+        <ul>
+            <li>Enter data</li>
+            <li>Confirm identity</li>
+            <li>Data flows up to the Regional Manager/RM Supervisor/SV</li>
+        </ul>
+
+        <!-- Form to submit data -->
+        <form action="/submit-form" method="POST">
+    <label for="shortText">Short Text:</label>
+    <input type="text" id="shortText" name="shortText" required>
+    
+    <label for="longText">Long Text:</label>
+    <textarea id="longText" name="longText" required></textarea>
+
+    <button type="submit">Submit</button>
+</form>
+
     </div>
-    <script src="server.js"></script>
+
+    <script>
+        // Handle form submission
+        document.getElementById('promoterForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const shortText = document.getElementById('shortText').value;
+            const longText = document.getElementById('longText').value;
+
+            // Send data to the server
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ shortText, longText }),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert('Data submitted successfully!');
+            } else {
+                alert('Failed to submit data.');
+            }
+        });
+    </script>
 </body>
 </html>
