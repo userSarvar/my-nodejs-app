@@ -5,6 +5,12 @@ const path = require('path');
 
 const app = express();
 
+// Serve favicon
+app.use(favicon(path.join(__dirname, 'SAMSUNG - DJIZZAKH', 'favicon.ico')));
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'SAMSUNG - DJIZZAKH')));
+
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -57,3 +63,8 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+
+
+
+
