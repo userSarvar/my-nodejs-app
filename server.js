@@ -1,17 +1,18 @@
+
+
+
+
+
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const path = require('path');
 
 const app = express();
-
-// Middleware to parse form data
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files from the 'pages' directory
-app.use(express.static(path.join(__dirname, 'pages')));
-
-// Connect to MongoDB Atlas
+// MongoDB Connection
 mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mongodb.net/yourDatabaseName', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -21,39 +22,29 @@ mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mong
     console.error('Error connecting to MongoDB Atlas', error);
 });
 
-// Define a schema and model for promoter data
-const promoterSchema = new mongoose.Schema({
+// Mongoose Schema and Model
+const DataSchema = new mongoose.Schema({
     shortText: String,
     longText: String,
 });
 
-const PromoterData = mongoose.model('PromoterData', promoterSchema);
+const Data = mongoose.model('Data', DataSchema);
 
-// Route to handle form submissions
-app.post('/submit-promoter', async (req, res) => {
+// POST Route to handle form submission
+app.post('/submit-form', (req, res) => {
     const { shortText, longText } = req.body;
 
-    const newEntry = new PromoterData({
-        shortText,
-        longText,
+    const newData = new Data({
+        shortText: shortText,
+        longText: longText,
     });
 
-    try {
-        await newEntry.save();
-        res.send('Data submitted successfully!');
-    } catch (error) {
-        console.error('Error saving data:', error);
-        res.status(500).send('Failed to save data.');
-    }
+    newData.save()
+        .then(() => res.send('Data saved successfully!'))
+        .catch((err) => res.status(500).send('Error saving data: ' + err));
 });
 
-// Serve the promoter page at the root URL
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'promoter.html'));
-});
-
-// Set the port for the server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+// Start the server
+app.listen(3000, () => {
+    console.log('Server is running on http://localhost:3000');
 });
