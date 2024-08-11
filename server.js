@@ -47,10 +47,18 @@ app.post('/submit-promoter', async (req, res) => {
     }
 });
 
-// Serve the promoter page at the root URL
+
+// Serve the index page at the root URL
 app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Serve the promoter page at '/promoter'
+app.get('/promoter', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'promoter.html'));
 });
+
+
 
 // Set the port for the server
 const port = process.env.PORT || 3000;
