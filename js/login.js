@@ -23,5 +23,5 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     }
 
     localStorage.setItem('role', role);
-    window.location.href = 'home.html';
+    window.location.href = '../pages/home.html';
 });
