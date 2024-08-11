@@ -1,15 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const path = require('path');
+const mongoose = require('mongoose');
 
+// Create Express app
 const app = express();
 
-// Middleware to parse form data
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Serve static files from the 'pages' directory
-app.use(express.static(path.join(__dirname, 'pages')));
+// Middleware to parse incoming requests with JSON payloads
+app.use(express.json());
 
 // Connect to MongoDB Atlas
 mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mongodb.net/yourDatabaseName', {
@@ -21,39 +18,46 @@ mongoose.connect('mongodb+srv://Samsunguser:0tddxGSOsHXadjLn@cluster0.w1z0c.mong
     console.error('Error connecting to MongoDB Atlas', error);
 });
 
-// Define a schema and model for promoter data
+// Serve static files
+app.use(express.static(path.join(__dirname, 'pagess')));
+
+// Add routes
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pagess', 'index.html'));
+});
+
+app.get('/promoter', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pagess', 'promoter.html'));
+});
+
+// Define a schema and model for your data
 const promoterSchema = new mongoose.Schema({
     shortText: String,
     longText: String,
 });
 
-const PromoterData = mongoose.model('PromoterData', promoterSchema);
+const Promoter = mongoose.model('Promoter', promoterSchema);
 
-// Route to handle form submissions
-app.post('/submit-promoter', async (req, res) => {
+// Handle form submission
+app.post('/submit-promoter', (req, res) => {
     const { shortText, longText } = req.body;
 
-    const newEntry = new PromoterData({
+    const newPromoter = new Promoter({
         shortText,
         longText,
     });
 
-    try {
-        await newEntry.save();
-        res.send('Data submitted successfully!');
-    } catch (error) {
-        console.error('Error saving data:', error);
-        res.status(500).send('Failed to save data.');
-    }
+    newPromoter.save()
+        .then(() => {
+            res.status(200).json({ message: 'Data saved successfully!' });
+        })
+        .catch((error) => {
+            res.status(500).json({ message: 'Failed to save data.', error });
+        });
 });
 
-// Serve the promoter page at the root URL
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'promoter.html'));
-});
-
-// Set the port for the server
+// Start the server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });
